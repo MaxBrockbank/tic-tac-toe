@@ -10,7 +10,7 @@ let history = {
 
   test('Should return default state', () => {
     expect(stepNumberReducer( 0 , { type:null } )).toEqual(0);
-  })
+  });
 
   test('Should set step number equal to object length', () => {
     const action = {

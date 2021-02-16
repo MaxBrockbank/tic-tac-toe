@@ -6,5 +6,5 @@ export default (state = 0 , action) => {
       return newState;
     default:
         return state;
-    }
   }
+}
