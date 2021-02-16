@@ -1,3 +1,10 @@
 export default (state = 0 , action) => {
-  return state;
-}
+  const { step } = action;
+  switch (action.type) {
+    case 'ADD_STEP':
+      const newState = step;
+      return newState;
+    default:
+        return state;
+    }
+  }
