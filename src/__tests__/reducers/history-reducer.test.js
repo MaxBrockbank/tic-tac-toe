@@ -1,4 +1,5 @@
-import historyReducer from "../../reducers/history-reducer";
+import historyReducer from "../../Reducers/history-reducer";
+import * as a from '../../actions/ActionTypes';
 
 describe('historyReducer', () => {
 let action;
@@ -18,7 +19,7 @@ let save = {
   test('Should successfully add new save to history', () => {
     const { squares, id } = save;
     action = {
-      type: "ADD_SAVE",
+      type: a.MANAGE_HISTORY,
       squares: squares,
       id: id
     };

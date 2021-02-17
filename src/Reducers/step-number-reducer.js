@@ -1,7 +1,7 @@
 export default (state = 0 , action) => {
   const { step } = action;
   switch (action.type) {
-    case 'ADD_STEP':
+    case 'MANAGE_STEP':
       const newState = step;
       return newState;
     default:

@@ -1,4 +1,5 @@
 import stepNumberReducer from "../../Reducers/step-number-reducer";
+import * as a from "../../actions/ActionTypes";
 
 
 describe('stepNumberReducer', () => {
@@ -13,8 +14,8 @@ let history = {
   });
 
   test('Should set step number equal to object length', () => {
-    const action = {
-      type: 'ADD_STEP',
+    const action = { 
+      type: a.MANAGE_STEP,
       step: Object.keys(history).length,
     }  
     expect(stepNumberReducer(0 , action)).toEqual(2)

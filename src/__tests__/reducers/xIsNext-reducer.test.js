@@ -1,5 +1,5 @@
 import xIsNextReducer from "../../Reducers/xIsNext-reducer";
-import xIsNext from "../../Reducers/xIsNext-reducer";
+import * as a from "../../actions/ActionTypes";
 
 describe('xIsNext', () => {
 
@@ -7,7 +7,7 @@ describe('xIsNext', () => {
   
   test('Should check the xIsNext reducer reverses boolean', () => {
     action = {
-      type: "TURN_TOGGLE"
+      type: a.TURN_TOGGLE
     }
     expect(xIsNextReducer(true, action )).toEqual(false)
   });
