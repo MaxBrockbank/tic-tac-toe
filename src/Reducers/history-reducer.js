@@ -1,7 +1,9 @@
+import * as c from "./../actions/ActionTypes";
+
 export default (state = {}, action) => {
   const { squares, id } = action;
   switch (action.type) {
-    case 'MANAGE_HISTORY':
+    case c.MANAGE_HISTORY:
       return Object.assign({}, state, {
         [id]: {
           squares: squares,
