@@ -19,7 +19,7 @@ class Game extends React.Component {
   handleClick(i) {
     console.log("stepNumber at click", this.props.stepNumber);
     const history = this.state.history.slice(0, this.props.stepNumber + 1);
-    const current = history[this.props.stepNumber];
+    const current = history[history.length - 1];
     const squares = current.squares.slice();
     if (this.calculateWinner(squares) || squares[i]) {
       return;
@@ -35,7 +35,7 @@ class Game extends React.Component {
       
     });
     const { dispatch } = this.props;
-    const action = a.manageStep(this.state.history.length);
+    const action = a.manageStep(this.props.stepNumber + 1);
     dispatch(action);
     // console.log("Line 38:", history);
   }
