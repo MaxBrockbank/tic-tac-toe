@@ -8,36 +8,40 @@ class Game extends React.Component {
   constructor(props){
     super(props);
     this.state ={
-      history: [{
-        squares: Array(9).fill(null),
-      }],
+      // history: [{
+      //   squares: Array(9).fill(null),
+      // }],
       // stepNumber: 0,
       // xIsNext: true,
     };
   }
 
+  // const sliced = Object.keys(myObject).slice(0, 5).reduce((result, key) => { result[key] = myObject[key];
+  //   return result;
+  // }, {});
+
   handleClick(i) {
-    const history = this.state.history.slice(0, this.props.stepNumber + 1);
-    const current = history[history.length - 1];
+    const history = Object.keys(this.props.history).slice(0, this.props.stepNumber + 1).reduce((result, key) => { result[key] = this.props.history[key];
+      return result;
+    }, {});
+    console.log(history);
+    // const history = this.props.history.slice(0, this.props.stepNumber + 1);
+    const current = history[Object.keys(history).length -1];
     const squares = current.squares.slice();
     if (this.calculateWinner(squares) || squares[i]) {
       return;
     }
     squares[i] = this.props.xIsNext ? 'X' : 'O';
-    
-    this.setState({
-      history: history.concat([{
-        squares: squares,
-      }]),
-      // stepNumber: history.length,
-      // xIsNext: !this.props.xIsNext,
-      
-    });
     const { dispatch } = this.props;
     const action = a.manageStep(this.props.stepNumber + 1);
     dispatch(action);
     const action2 = a.turnToggle();
     dispatch(action2);
+    const action3 = a.manageHistory({
+      squares: squares,
+      id: this.props.stepNumber + 1
+    })
+    dispatch(action3);
   }
 
   jumpTo(step) {
@@ -48,10 +52,7 @@ class Game extends React.Component {
       const action2 = a.turnToggle();
       dispatch(action2);
     }
-    // this.setState({                                                                                                                                            
-    //   // stepNumber: step,
-    //   xIsNext: (step % 2) === 0,
-    // });
+    console.log(this.props.history);
   }
 
   calculateWinner(squares) {
@@ -75,11 +76,11 @@ class Game extends React.Component {
   }
 
   render() {
-    const history = this.state.history;
+    const history = this.props.history;
     const current = history[this.props.stepNumber];
     const winner = this.calculateWinner(current.squares);
-
-    const moves = history.map((step, move) => {
+    console.log("This.props.history: line 82", this.props.history);
+    const moves = Object.keys(this.props.history).map((step, move) => {
       const desc = move ?
         'Go to move #' + move :
         'Go to game start';
@@ -111,13 +112,15 @@ class Game extends React.Component {
 
 Game.propTypes = {
   stepNumber: PropTypes.number,
-  xIsNext: PropTypes.bool
+  xIsNext: PropTypes.bool,
+  history: PropTypes.object
 }
 
 const mapStateToProps = state => {
   return {
     stepNumber: state.stepNumber,
-    xIsNext: state.xIsNext
+    xIsNext: state.xIsNext,
+    history:  state.history
   }
 }
 

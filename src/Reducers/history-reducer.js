@@ -1,13 +1,13 @@
 import * as c from "./../actions/ActionTypes";
 
-export default (state = {}, action) => {
+export default (state = {0: {squares: Array(9).fill(null), id: 0}}, action) => {
   const { squares, id } = action;
   switch (action.type) {
     case c.MANAGE_HISTORY:
       return Object.assign({}, state, {
         [id]: {
           squares: squares,
-          id: id
+          // id: id,
         }
       });
       default:
@@ -23,10 +23,8 @@ export default (state = {}, action) => {
 //   4: 'four'
 //  };
  
-//  const sliced = Object.keys(myObject).slice(0, 5).reduce((result, key) => {
-//                      result[key] = myObject[key];
- 
-//                      return result;
-//                  }, {});
+// const sliced = Object.keys(myObject).slice(0, 5).reduce((result, key) => { result[key] = myObject[key];
+//   return result;
+// }, {});
  
 // //  console.log(sliced);
