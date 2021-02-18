@@ -1,5 +1,8 @@
 import React from 'react';
 import Board from './Board';
+import { connect } from "react-redux";
+import * as a from "./../actions"
+import PropTypes from 'prop-types';
 
 class Game extends React.Component {
   constructor(props){
@@ -8,32 +11,43 @@ class Game extends React.Component {
       history: [{
         squares: Array(9).fill(null),
       }],
-      stepNumber: 0,
+      // stepNumber: 0,
       xIsNext: true,
     };
   }
 
   handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[this.state.stepNumber];
+    console.log("stepNumber at click", this.props.stepNumber);
+    const history = this.state.history.slice(0, this.props.stepNumber + 1);
+    const current = history[this.props.stepNumber];
     const squares = current.squares.slice();
     if (this.calculateWinner(squares) || squares[i]) {
       return;
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
+    
     this.setState({
       history: history.concat([{
         squares: squares,
       }]),
-      stepNumber: history.length,
+      // stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
+      
     });
-    console.log(history);
+    const { dispatch } = this.props;
+    const action = a.manageStep(this.state.history.length);
+    dispatch(action);
+    // console.log("Line 38:", history);
   }
 
   jumpTo(step) {
+    console.log("step at jumpTo", step);
+    console.log(this.state.history[step]);
+    const { dispatch } = this.props;
+    const action = a.manageStep(step);
+    dispatch(action)
     this.setState({
-      stepNumber: step,
+      // stepNumber: step,
       xIsNext: (step % 2) === 0,
     });
   }
@@ -60,7 +74,11 @@ class Game extends React.Component {
 
   render() {
     const history = this.state.history;
-    const current = history[this.state.stepNumber];
+    console.log("stepnumber at Render", this.props.stepNumber);
+    console.log(history[this.props.stepNumber]);
+    console.log("history at Render", history);
+    const current = history[this.props.stepNumber];
+    console.log("current at render", current);
     const winner = this.calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
@@ -92,5 +110,17 @@ class Game extends React.Component {
     );
   }
 }
+
+Game.propTypes = {
+  stepNumber: PropTypes.number
+}
+
+const mapStateToProps = state => {
+  return {
+    stepNumber: state.stepNumber
+  }
+}
+
+Game = connect(mapStateToProps)(Game);
 
 export default Game;
